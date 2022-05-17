@@ -4,9 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Malitus"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <oxy:PlotView x:Name="myPlot" Grid.Row="0" Model="{Binding ModelPlot}"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Input k: "/>
+                <TextBox Height="20" Width="60" Name="input_k"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Input q: "/>
+                    <TextBox Name="input_q" Width="60"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Input years: "/>
+                    <TextBox Name="input_years" Width="60"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Input start count of fish: "/>
+                    <TextBox x:Name="input_startfish" Width="60"/>
+                </StackPanel>
+            </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1"/>
+        </Grid>
+        <Button Grid.Row="2" Content="Calculate" Click="OnCalculateButtonClick" Margin="20"/>
     </Grid>
 </Window>
