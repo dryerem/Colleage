@@ -22,31 +22,35 @@ namespace Malitus
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly FunctionSeries _series = new FunctionSeries();
         public MainWindow()
         {
             InitializeComponent();
-
-            ModelPlot = new PlotModel { Title = "Биологическая модель Мальтуса" };
-            DataContext = this;
         }
-
-        public PlotModel ModelPlot { get; private set; }
 
         public void OnCalculateButtonClick(object sender, RoutedEventArgs e)
         {
-            int k = int.Parse(input_k.Text);
-            float q = float.Parse(input_q.Text);
-            int years = int.Parse(input_years.Text);
+            PlotModel plotModel = new PlotModel { Title = "Биологическая модель Мальтуса" };
+            LineSeries series = new LineSeries();
 
-            float prevCount = float.Parse(input_startfish.Text);
-            for (int year = 1; year <= years; year++)
+            if (!float.TryParse(input_k.Text, out float k)) { ShowError(); return; }
+            if (!float.TryParse(input_q.Text, out float q)) { ShowError(); return; }
+            if (!int.TryParse(input_years.Text, out int y)) { ShowError(); return; }
+
+            int prevCount = int.Parse(input_startfish.Text);
+            for (int year = 1; year <= y; year++)
 			{
                 // кол-во рыб + рождаемость * кол-во рыб - смертность * (кол-во рыб^2) 
-                prevCount = prevCount + k * prevCount - q * (prevCount * prevCount);
-                _series.Points.Add(new DataPoint(prevCount, year));
+                prevCount = (int)(prevCount + k * prevCount - q * (prevCount * prevCount));
+                series.Points.Add(new DataPoint(prevCount, year));
 			}
-            ModelPlot.Series.Add(_series);
+
+            plotModel.Series.Add(series);
+            oxyGraph.Model = plotModel;
         }
+
+        private void ShowError()
+		{
+            MessageBox.Show("Проверьте корректность ввода полей!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
     }
 }
