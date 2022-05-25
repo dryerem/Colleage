@@ -133,7 +133,7 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMaxViColor}" Value="true">
+                                <DataTrigger Binding="{Binding IsMinViColor}" Value="true">
                                     <Setter Property="Background" Value="Red"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -147,7 +147,7 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMinViColor}" Value="true">
+                                <DataTrigger Binding="{Binding IsMaxViColor}" Value="true">
                                     <Setter Property="Background" Value="Green"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -163,9 +163,14 @@
             <TextBox x:Name="c" Width="60" Margin="10, 0, 0, 0"/>
 
             <TextBlock Text="alpha, betta, gamma:" Margin="50, 0, 0, 0"/>
-            <TextBox x:Name="alpha" Width="60" Margin="10, 0, 0, 0"/>
-            <TextBox x:Name="betta" Width="60" Margin="10, 0, 0, 0"/>
-            <TextBox x:Name="gamma" Width="60" Margin="10, 0, 0, 0"/>
+            <TextBox x:Name="alpha" Width="40" Margin="10, 0, 0, 0"/>
+            <TextBox x:Name="betta" Width="40" Margin="10, 0, 0, 0"/>
+            <TextBox x:Name="gamma" Width="40" Margin="10, 0, 0, 0"/>
+
+            <TextBlock Text="P(vi1)" Margin="20, 0, 0, 0"/>
+            <TextBox x:Name="minVi" Width="40" Margin="10, 0, 0, 0"/>
+            <TextBlock Text="P(vi2)" Margin="20, 0, 0, 0"/>
+            <TextBox x:Name="maxVi" Width="40" Margin="10, 0, 0, 0"/>
         </StackPanel>
         <Button Grid.Row="3" 
                 x:Name="btnBack" 

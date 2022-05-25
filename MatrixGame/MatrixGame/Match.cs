@@ -2,17 +2,17 @@
 {
 	public struct Match
 	{
-		public uint k { get; set; }
+		public int k { get; set; }
 		public string tm1 { get; set; }
 		public string tm2 { get; set; }
-		public uint a { get; set; }
-		public uint b { get; set; }
-		public uint c { get; set; }
-		public uint alpha { get; set; }
-		public uint betta { get; set; }
-		public uint gamma { get; set; }
-		public float vi1 { get; set; }
-		public float vi2 { get; set; }
+		public double a { get; set; }
+		public double b { get; set; }
+		public double c { get; set; }
+		public double alpha { get; set; }
+		public double betta { get; set; }
+		public double gamma { get; set; }
+		public double vi1 { get; set; }
+		public double vi2 { get; set; }
 
 		/* Color section */
 		public bool IsAColor { get; set; }

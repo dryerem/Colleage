@@ -2,8 +2,8 @@
 {
 	internal struct Matrix
 	{
-		public uint _11, _12, _13;
-		public uint _21, _22, _23;
-		public uint _31, _32, _33;
+		public double _11, _12, _13;
+		public double _21, _22, _23;
+		public double _31, _32, _33;
 	}
 }

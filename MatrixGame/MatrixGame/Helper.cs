@@ -1,42 +1,23 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
 
 namespace MatrixGame
 {
 	internal static class Helper
 	{
 		public static Frame MainFrame { get; set; }
-		public static uint Max(uint a, uint b, uint c)
+		public static double Max(double a, double b, double c)
 		{
-			uint max = a;
+			double[] array = { a, b, c };
 
-			if (b > max)
-			{
-				max = b;
-			}
-
-			if (c > max)
-			{
-				max = c;
-			}
-
-			return max;
+			return array.Max<double>(); 
 		}
 
-		public static uint Min(uint a, uint b, uint c)
+		public static double Min(double a, double b, double c)
 		{
-			uint min = a;
+			double[] array = { a, b, c };
 
-			if (b < min)
-			{
-				min = b;
-			}
-
-			if (c < min)
-			{
-				min = c;
-			}
-
-			return min;
+			return array.Min<double>();
 		}
 	}
 }

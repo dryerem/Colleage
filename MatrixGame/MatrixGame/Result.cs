@@ -2,14 +2,16 @@
 {
 	public struct Result
 	{
-		public float A { get; set; }
-		public float B { get; set; }
-		public float C { get; set; }
-		public float Alpha { get; set; }
-		public float Betta { get; set; }
-		public float Gamma { get; set; }
-		public uint AlphaSedlPoint { get; set; }
-		public uint BettaSedlPoint { get; set; }
+		public double A { get; set; }
+		public double B { get; set; }
+		public double C { get; set; }
+		public double Alpha { get; set; }
+		public double Betta { get; set; }
+		public double Gamma { get; set; }
+		public double MinVi { get; set; }
+		public double MaxVi { get; set; }
+		public double AlphaSedlPoint { get; set; }
+		public double BettaSedlPoint { get; set; }
 		public bool SedlPoint { get; set; }
 	}
 }

@@ -32,6 +32,9 @@ namespace MatrixGame.View
 			sedlAlpha.Text = _result.AlphaSedlPoint.ToString();
 			sedlBetta.Text = _result.BettaSedlPoint.ToString();
 
+			minVi.Text = _result.MinVi.ToString();
+			maxVi.Text = _result.MaxVi.ToString();
+
 			if (_result.SedlPoint)
 			{
 				sedl.Text = "Да";

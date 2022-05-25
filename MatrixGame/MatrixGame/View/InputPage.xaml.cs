@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,17 +32,17 @@ namespace MatrixGame.View
 		private void OnCalculateButtonClick(object sender, RoutedEventArgs e)
 		{
 			/* Save the matrix parameters */
-			if (!uint.TryParse(_11.Text, out _matrix._11)) { ShowError(); return; }
-			if (!uint.TryParse(_12.Text, out _matrix._12)) { ShowError(); return; }
-			if (!uint.TryParse(_13.Text, out _matrix._13)) { ShowError(); return; }
+			if (!double.TryParse(_11.Text, out _matrix._11)) { ShowError(); return; }
+			if (!double.TryParse(_12.Text, out _matrix._12)) { ShowError(); return; }
+			if (!double.TryParse(_13.Text, out _matrix._13)) { ShowError(); return; }
 
-			if (!uint.TryParse(_21.Text, out _matrix._21)) { ShowError(); return; }
-			if (!uint.TryParse(_22.Text, out _matrix._22)) { ShowError(); return; }
-			if (!uint.TryParse(_23.Text, out _matrix._23)) { ShowError(); return; }
+			if (!double.TryParse(_21.Text, out _matrix._21)) { ShowError(); return; }
+			if (!double.TryParse(_22.Text, out _matrix._22)) { ShowError(); return; }
+			if (!double.TryParse(_23.Text, out _matrix._23)) { ShowError(); return; }
 
-			if (!uint.TryParse(_31.Text, out _matrix._31)) { ShowError(); return; }
-			if (!uint.TryParse(_32.Text, out _matrix._32)) { ShowError(); return; }
-			if (!uint.TryParse(_33.Text, out _matrix._33)) { ShowError(); return; }
+			if (!double.TryParse(_31.Text, out _matrix._31)) { ShowError(); return; }
+			if (!double.TryParse(_32.Text, out _matrix._32)) { ShowError(); return; }
+			if (!double.TryParse(_33.Text, out _matrix._33)) { ShowError(); return; }
 
 			if (!uint.TryParse(iterations.Text, out iter)) { ShowError(); return; }
 
@@ -55,16 +56,16 @@ namespace MatrixGame.View
 		private void CalculateGame()
 		{
 			/* Calculate sedl point */
-			uint row_1_min = Helper.Min(_matrix._11, _matrix._12, _matrix._13);
-			uint row_2_min = Helper.Min(_matrix._21, _matrix._22, _matrix._23);
-			uint row_3_min = Helper.Min(_matrix._31, _matrix._32, _matrix._33);
+			double row_1_min = Helper.Min(_matrix._11, _matrix._12, _matrix._13);
+			double row_2_min = Helper.Min(_matrix._21, _matrix._22, _matrix._23);
+			double row_3_min = Helper.Min(_matrix._31, _matrix._32, _matrix._33);
 
-			uint col_1_max = Helper.Max(_matrix._11, _matrix._21, _matrix._31);
-			uint col_2_max = Helper.Max(_matrix._12, _matrix._22, _matrix._32);
-			uint col_3_max = Helper.Max(_matrix._13, _matrix._23, _matrix._33);
+			double col_1_max = Helper.Max(_matrix._11, _matrix._21, _matrix._31);
+			double col_2_max = Helper.Max(_matrix._12, _matrix._22, _matrix._32);
+			double col_3_max = Helper.Max(_matrix._13, _matrix._23, _matrix._33);
 
-			uint alpha_max = Helper.Max(row_1_min, row_2_min, row_3_min);
-			uint betta_min = Helper.Min(col_1_max, col_2_max, col_3_max);
+			double alpha_max = Helper.Max(row_1_min, row_2_min, row_3_min);
+			double betta_min = Helper.Min(col_1_max, col_2_max, col_3_max);
 
 			_result.AlphaSedlPoint = alpha_max;
 			_result.BettaSedlPoint = betta_min;
@@ -82,8 +83,8 @@ namespace MatrixGame.View
 				alpha = _matrix._11,
 				betta = _matrix._12,
 				gamma = _matrix._13,
-				vi1 = Helper.Max(_matrix._11, _matrix._21, _matrix._31) / (float)1,
-				vi2 = Helper.Min(_matrix._11, _matrix._12, _matrix._13) / (float)1
+				vi1 = Helper.Max(_matrix._11, _matrix._21, _matrix._31) / 1,
+				vi2 = Helper.Min(_matrix._11, _matrix._12, _matrix._13) / 1
 			};
 			/* Set color state */
 			if (Helper.Max(match.a, match.b, match.c) == match.a) { match.IsAColor = true; match.IsBColor = false; match.IsCColor = false; }
@@ -96,24 +97,24 @@ namespace MatrixGame.View
 			else if (Helper.Min(match.alpha, match.betta, match.gamma) == match.gamma) { match.IsAlphaColor = false; match.IsBettaColor = false; match.IsGammaColor = true; }
 			_matches.Add(match);
 
-			float min_vi = match.vi1;
-			uint min_vi_k = 1;
+			double min_vi = match.vi1;
+			int min_vi_k = 1;
 
-			float max_vi = match.vi2;
-			uint max_vi_k = 1;
+			double max_vi = match.vi2;
+			int max_vi_k = 1;
 
-			float _a = 0.0f;
-			float _b = 0.0f;
-			float _c = 0.0f;
+			double _a = 1;
+			double _b = 0;
+			double _c = 0;
 
-			float _alph = 0.0f;
-			float _bett = 0.0f;
-			float _gamm = 0.0f;
+			double _alph = 1;
+			double _bett = 0;
+			double _gamm = 0;
 
 			/* Calculate all matches*/
-			for (uint k = 2; k <= iter; k++)
+			for (int k = 2; k <= iter; k++)
 			{
-				Match prevMatch = _matches[(int)k - 2];
+				Match prevMatch = _matches[k - 2];
 
 				// Find tm1
 				if (Helper.Max(prevMatch.a, prevMatch.b, prevMatch.c) == prevMatch.a)
@@ -192,12 +193,12 @@ namespace MatrixGame.View
 				else if (Helper.Min(match.alpha, match.betta, match.gamma) == match.gamma) { match.IsAlphaColor = false; match.IsBettaColor = false; match.IsGammaColor = true; }
 
 				match.k = k;
-				match.vi1 = Helper.Max(match.a, match.b, match.c) / (float)k;
-				match.vi2 = Helper.Min(match.alpha, match.betta, match.gamma) / (float)k;
+				match.vi1 = Helper.Max(match.a, match.b, match.c) / k;
+				match.vi2 = Helper.Min(match.alpha, match.betta, match.gamma) / k;
 
 				/* Update max and min vi */
-				if (match.vi1 < min_vi) { min_vi = match.vi1; min_vi_k = k - 2; }
-				if (match.vi2 > max_vi) { max_vi = match.vi2; max_vi_k = k - 2; }
+				//if (match.vi1 < min_vi) { min_vi = match.vi1; min_vi_k = k - 1; }
+				//if (match.vi2 > max_vi) { max_vi = match.vi2; max_vi_k = k - 1; }
 
 				/* Calculate result parametrs */
 				if (match.tm1 == _tmA) { _a++; }
@@ -211,23 +212,49 @@ namespace MatrixGame.View
 				_matches.Add(match);
 			}
 
+
+			// Я знаю, что это дикие костыли, но мне нужно было как можно скорее сдать работу :) 
+
+
 			/* Set vi color state */
-			Match m = _matches[(int)max_vi_k];
-			m.IsMaxViColor = true;
-			m.IsMinViColor = false;
-			_matches[(int)max_vi_k] = m;
+			//Match m = _matches[max_vi_k];
+			//m.IsMaxViColor = true;
+			//m.IsMinViColor = false;
+			//_matches[max_vi_k] = m;
+			//_result.MaxVi = m.vi2;
 
-			m = _matches[(int)min_vi_k];
-			m.IsMinViColor = true;
-			m.IsMaxViColor = false;
-			_matches[(int)min_vi_k] = m;
+			List<double> AllVi1 = new List<double>();
+			_matches.ForEach(x => AllVi1.Add(x.vi1));
+			Match minVi = _matches[AllVi1.IndexOf(AllVi1.Min<double>())];
+			int minViIndex = _matches.IndexOf(minVi);
 
-			_result.A = _a / (float)20;
-			_result.B = _b / (float)20;
-			_result.C = _c / (float)20;
-			_result.Alpha = _alph / (float)20;
-			_result.Betta = _bett / (float)20;
-			_result.Gamma = _gamm / (float)20;
+			minVi.IsMinViColor = true;
+			minVi.IsMaxViColor = false;
+			_result.MinVi = minVi.vi1;
+			_matches[minViIndex] = minVi;
+
+			List<double> AllVi2 = new List<double>();
+			_matches.ForEach(x => AllVi2.Add(x.vi2));
+			Match maxVi = _matches[AllVi2.IndexOf(AllVi2.Max<double>())];
+			int maxViIndex = _matches.IndexOf(maxVi);
+
+			maxVi.IsMaxViColor = true;
+			maxVi.IsMinViColor = false;
+			_result.MaxVi = maxVi.vi2;
+			_matches[maxViIndex] = maxVi;
+
+			//m = _matches[min_vi_k];
+			//m.IsMinViColor = true;
+			//m.IsMaxViColor = false;
+			//_matches[min_vi_k] = m;
+			//_result.MinVi = m.vi1;
+
+			_result.A = _a / iter;
+			_result.B = _b / iter;
+			_result.C = _c / iter;
+			_result.Alpha = _alph / iter;
+			_result.Betta = _bett / iter;
+			_result.Gamma = _gamm / iter;
 		}
 
 		private void ShowError()
