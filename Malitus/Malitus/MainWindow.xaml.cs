@@ -46,6 +46,8 @@ namespace Malitus
 
             plotModel.Series.Add(series);
             oxyGraph.Model = plotModel;
+            oxyGraph.Model.Axes[0].Title = "Год";
+            oxyGraph.Model.Axes[1].Title = "Число рыб";
         }
 
         private void ShowError()
